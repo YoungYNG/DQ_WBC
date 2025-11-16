@@ -32,9 +32,9 @@ cd ..
 cd skrl && pip install -e .
 
 cd ../..
-cd low-level && pip install -e .
+cd DQ_low-level && pip install -e .
 
-pip install numpy pydelatin tqdm imageio-ffmpeg opencv-python wandb scipy
+pip install numpy pydelatin tqdm imageio-ffmpeg opencv-python wandb scipy termcolor
 ```
 
 # 🛠️ Usage
