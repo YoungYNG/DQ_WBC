@@ -15,9 +15,9 @@
 ## Set up the environment
 ```bash
 conda create -n dqwbc python=3.8 # isaacgym requires python <=3.8
-conda activate b1z1
+conda activate dqwbc
 
-git@github.com:YoungYNG/DQ_WBC.git
+git clone https://github.com/YoungYNG/DQ_WBC.git
 
 cd DQ_WBC
 
