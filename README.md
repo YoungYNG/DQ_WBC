@@ -46,15 +46,15 @@ This part you can totally refer to [VBC's Low-level introduction](https://github
 ### High-level training and eval
 1. Train DQ_teacher:
 ```bash
-   python train_multistate_DQ_teacher.py --rl_device cuda:0 --sim_device cuda:0 --timesteps 120000  --task B1Z1PickMulti --experiment_dir DQ_teacher/b1-pick-multi-teacher01 --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
+   python train_multistate_DQ_teacher.py --rl_device cuda:0 --sim_device cuda:0 --timesteps 120000  --task B1Z1PickMulti --experiment_dir DQ_teacher/b1-pick-multi-DQteacher_01 --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
    ```
 2. Play DQ_teacher:
    ```bash
-   python play_multistate_DQ_teacher.py --task B1Z1PickMulti --checkpoint your_teacher_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --rl_device cuda:0 --sim_device cuda:0   --headless
+   python play_multistate_DQ_teacher.py --task B1Z1PickMulti --checkpoint "your_teacher_checkpoint_path" --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --rl_device "cuda:0" --sim_device "cuda:0"  --headless
    ```
 3. Train DQ_stu:
    ```bash
-   python train_multi_bc_deter_DQ_stu.py --task B1Z1PickMulti --rl_device cuda:0 --sim_device cuda:0 --timesteps 240000 --experiment_dir DQ_opensource/b1-pick-multi-stu_transformer_grasp_have_vel_test01 --teacher_ckpt_path  your_teacher_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
+   python train_multi_bc_deter_DQ_stu.py --task B1Z1PickMulti --rl_device cuda:0 --sim_device cuda:0 --timesteps 240000 --experiment_dir DQ_stu/b1-pick-multi-DQstu_01 --teacher_ckpt_path  your_teacher_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
    ```
 4. Play DQ_stu:
    ```bash

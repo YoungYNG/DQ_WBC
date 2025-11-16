@@ -53,7 +53,7 @@ class SequentialTrainer(Trainer):
     def train(self) -> None:
         """Train the agents sequentially
 
-        This method executes the following steps in loop:
+        This method executes the following steps in loop: 
 
         - Pre-interaction (sequentially)
         - Compute actions (sequentially)

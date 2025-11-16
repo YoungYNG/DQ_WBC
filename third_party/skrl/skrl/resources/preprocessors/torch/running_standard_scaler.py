@@ -134,6 +134,8 @@ class RunningStandardScaler(nn.Module):
                            min=-self.clip_threshold,
                            max=self.clip_threshold)
 
+        # return x
+
     def forward(self,
                 x: torch.Tensor,
                 train: bool = False,
@@ -175,3 +177,14 @@ class RunningStandardScaler(nn.Module):
             with torch.no_grad():
                 return self._compute(x, train, inverse)
         return self._compute(x, train, inverse)
+    
+        # if isinstance(x, dict):
+        #     obs = x['obs']
+        # else:
+        #     obs = x
+
+        # if no_grad:
+        #     with torch.no_grad():
+        #         return self._compute(obs, train, inverse)
+        # return self._compute(obs, train, inverse)
+

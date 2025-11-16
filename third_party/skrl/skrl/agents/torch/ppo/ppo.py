@@ -64,7 +64,7 @@ PPO_DEFAULT_CONFIG = {
 # [end-config-dict-torch]
 
 
-class PPO(Agent):
+class PPO(Agent): 
     def __init__(self,
                  models: Dict[str, Model],
                  memory: Optional[Union[Memory, Tuple[Memory]]] = None,
@@ -215,6 +215,15 @@ class PPO(Agent):
 
         # sample stochastic actions
         actions, log_prob, outputs = self.policy.act({"states": self._state_preprocessor(states)}, role="policy")
+        # 处理 log_prob 为 None 的情况
+        if log_prob is None:
+            if isinstance(actions, torch.Tensor):
+                # 使用 batch size 和 device 与 actions 一致的零 tensor
+                log_prob = torch.zeros(1, device=actions.device)
+            else:
+                # fallback：创建一个默认 log_prob tensor（1个元素）
+                log_prob = torch.tensor([0.0])
+
         self._current_log_prob = log_prob
 
         return actions, log_prob, outputs
@@ -385,10 +394,12 @@ class PPO(Agent):
 
                 sampled_states = self._state_preprocessor(sampled_states, train=not epoch)
                 
-                try:
-                    _, next_log_prob, _ = self.policy.act({"states": sampled_states, "taken_actions": sampled_actions}, role="policy")
-                except:
-                    import ipdb; ipdb.set_trace()
+                # try:
+                #     _, next_log_prob, _ = self.policy.act({"states": sampled_states, "taken_actions": sampled_actions}, role="policy")
+                # except:
+                #     import ipdb; ipdb.set_trace()
+                
+                _, next_log_prob, _ = self.policy.act({"states": sampled_states, "taken_actions": sampled_actions}, role="policy")
                 # compute approximate KL divergence
                 with torch.no_grad():
                     ratio = next_log_prob - sampled_log_prob

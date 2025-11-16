@@ -85,10 +85,20 @@ class DeterministicMixin:
             torch.Size([4096, 1]) {}
         """
         # map from observations/states to actions
-        actions, outputs = self.compute(inputs, role)
+        # actions, outputs = self.compute(inputs, role)
+        
+        #####################kivy######################
+        result = self.compute(inputs, role)
+        if len(result) == 2:
+            actions, outputs = result
+            extra = None
+        else:
+            actions, extra, outputs = result
+
         
         # clip actions
         if self._d_clip_actions[role] if role in self._d_clip_actions else self._d_clip_actions[""]:
             actions = torch.clamp(actions, min=self.clip_actions_min, max=self.clip_actions_max)
 
-        return actions, None, outputs
+        return actions, extra, outputs
+ 

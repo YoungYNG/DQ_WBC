@@ -92,7 +92,7 @@ class PPO_RNN(Agent):
         :param cfg: Configuration dictionary
         :type cfg: dict
 
-        :raises KeyError: If the models dictionary is missing a required key 
+        :raises KeyError: If the models dictionary is missing a required key
         """
         _cfg = copy.deepcopy(PPO_DEFAULT_CONFIG)
         _cfg.update(cfg if cfg is not None else {})

@@ -6,7 +6,7 @@ import tqdm
 import torch
 
 from skrl import logger
-from skrl.agents.torch import Agent 
+from skrl.agents.torch import Agent
 from skrl.envs.wrappers.torch import Wrapper
 
 
@@ -168,7 +168,10 @@ class Trainer:
 
             # pre-interaction
             self.agents.pre_interaction(timestep=timestep, timesteps=self.timesteps)
-
+            
+            # states = states["obs"]
+            # states = states["states"]
+            
             # compute actions
             with torch.no_grad():
                 actions = self.agents.act(states, timestep=timestep, timesteps=self.timesteps)[0]

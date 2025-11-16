@@ -112,6 +112,79 @@ class GaussianMixin:
         self._g_reduction[role] = torch.mean if reduction == "mean" else torch.sum if reduction == "sum" \
             else torch.prod if reduction == "prod" else None
 
+    # def act(self,
+    #         inputs: Mapping[str, Union[torch.Tensor, Any]],
+    #         role: str = "") -> Tuple[torch.Tensor, Union[torch.Tensor, None], Mapping[str, Union[torch.Tensor, Any]]]:
+    #     """Act stochastically in response to the state of the environment
+
+    #     :param inputs: Model inputs. The most common keys are:
+
+    #                    - ``"states"``: state of the environment used to make the decision
+    #                    - ``"taken_actions"``: actions taken by the policy for the given states
+    #     :type inputs: dict where the values are typically torch.Tensor
+    #     :param role: Role play by the model (default: ``""``)
+    #     :type role: str, optional
+
+    #     :return: Model output. The first component is the action to be taken by the agent.
+    #              The second component is the log of the probability density function.
+    #              The third component is a dictionary containing the mean actions ``"mean_actions"``
+    #              and extra output values
+    #     :rtype: tuple of torch.Tensor, torch.Tensor or None, and dict
+
+    #     Example::
+
+    #         >>> # given a batch of sample states with shape (4096, 60)
+    #         >>> actions, log_prob, outputs = model.act({"states": states})
+    #         >>> print(actions.shape, log_prob.shape, outputs["mean_actions"].shape) 
+    #         torch.Size([4096, 8]) torch.Size([4096, 1]) torch.Size([4096, 8])
+    #     """
+    #     # map from states/observations to mean actions and log standard deviations
+    #     base_actions, mean_actions, deterministic, log_std, outputs = self.compute(inputs, role)
+
+    #     # clamp log standard deviations
+    #     if self._g_clip_log_std[role] if role in self._g_clip_log_std else self._g_clip_log_std[""]:
+    #         log_std = torch.clamp(log_std,
+    #                               self._g_log_std_min[role] if role in self._g_log_std_min else self._g_log_std_min[""],
+    #                               self._g_log_std_max[role] if role in self._g_log_std_max else self._g_log_std_max[""])
+
+    #     self._g_log_std[role] = log_std
+    #     self._g_num_samples[role] = mean_actions.shape[0]
+
+    #     # distribution
+    #     if self.transform_func is None:    
+    #         self._g_distribution[role] = Normal(mean_actions, log_std.exp())
+    #     else:
+    #         # self._g_distribution[role] = TransformedDistribution(Normal(mean_actions, log_std.exp()), [self.transform_func])
+    #         self._g_distribution[role] = TanhNormal(mean_actions, log_std.exp())
+
+    #     self.deterministic = deterministic
+
+    #     if self.deterministic:
+    #         actions = mean_actions
+    #     else:
+    #         # sample using the reparameterization trick
+    #         actions = self._g_distribution[role].rsample()
+
+    #     # clip actions
+    #     if self._g_clip_actions[role] if role in self._g_clip_actions else self._g_clip_actions[""]:
+    #         actions = torch.clamp(actions, min=self.clip_actions_min, max=self.clip_actions_max)
+        
+    #     # log of the probability density function
+    #     log_prob = self._g_distribution[role].log_prob(inputs.get("taken_actions", actions))
+    #     reduction = self._g_reduction[role] if role in self._g_reduction else self._g_reduction[""]
+    #     if reduction is not None:
+    #         log_prob = reduction(log_prob, dim=-1)
+    #     if log_prob.dim() != actions.dim():
+    #         log_prob = log_prob.unsqueeze(-1)
+
+    #     outputs["mean_actions"] = mean_actions
+        
+    #     # residual actions
+    #     base_actions[:,0:6] += actions[:,0:6]
+    #     actions = base_actions
+        
+    #     return actions, log_prob, outputs
+
     def act(self,
             inputs: Mapping[str, Union[torch.Tensor, Any]],
             role: str = "") -> Tuple[torch.Tensor, Union[torch.Tensor, None], Mapping[str, Union[torch.Tensor, Any]]]:
@@ -135,7 +208,7 @@ class GaussianMixin:
 
             >>> # given a batch of sample states with shape (4096, 60)
             >>> actions, log_prob, outputs = model.act({"states": states})
-            >>> print(actions.shape, log_prob.shape, outputs["mean_actions"].shape)
+            >>> print(actions.shape, log_prob.shape, outputs["mean_actions"].shape) 
             torch.Size([4096, 8]) torch.Size([4096, 1]) torch.Size([4096, 8])
         """
         # map from states/observations to mean actions and log standard deviations
