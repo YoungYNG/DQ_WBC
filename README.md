@@ -61,6 +61,9 @@ This part you can totally refer to [VBC's Low-level introduction](https://github
    python play_multi_bc_deter_DQ_stu.py --task B1Z1PickMulti --checkpoint your_stu_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --rl_device cuda:0 --sim_device cuda:0   --headless
    ```
 
+### Change the DQ_Bench Level:
+You can easily make this by just modifying the config file:`DQ_WBC/DQ_high-level/data/cfg/DQ_stu.yaml`,`DQ_WBC/DQ_high-level/data/cfg/DQ_teacher.yaml`
+
 
 # 📝 Citation
 
