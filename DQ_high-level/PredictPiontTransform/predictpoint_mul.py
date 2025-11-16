@@ -1,8 +1,6 @@
 import torch
 import numpy as np
 from scipy.spatial.transform import Rotation as R
-import kornia
-from pytorch3d.transforms import matrix_to_euler_angles
 from typing import Tuple
 
 class PredictPoint:

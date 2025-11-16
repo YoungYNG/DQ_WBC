@@ -1,29 +1,24 @@
-# Visual Whole-Body for Loco-Manipulation
 
-https://wholebody-b1.github.io/
+**[Project Page](https://kolakivy.github.io/DQ/)** | **[arXiv](https://arxiv.org/abs/2508.08328)**
 
-Related to paper <[Visual Whole-Body Control for Legged Loco-Manipulation](https://arxiv.org/abs/2403.16967)>
+**[Qiwei Liang](https://kolakivy.github.io/)**,Boyang Cai,Rongyi He, Hui Li, Tao Teng, [Haihan Duan](https://duanhaihan.github.io/), Changxin Huang, **[Runhao Zeng](https://zengrunhao.com/)***
+
+**Association for the Advancement of Artificial Intelligence(AAAI)  2026**
 
 <p align="center">
-<img src="./teaser.jpg" width="80%"/>
+<img src="./dqnet_architecture.png" width="80%"/>
 </p>
+**Clarification**: Our project is highly based on work--VBC([Visual Whole-Body for Loco-Manipulation]([Ericonaldo/visual_wholebody: Train a loco-manipulation dog with RL](https://github.com/Ericonaldo/visual_wholebody)))
 
-## Model learning reference
-
-Low-level learning curves: [wandb](https://wandb.ai/ericonaldo/b1z1-low)
-
-High-level learning curves: [wandb](https://wandb.ai/ericonaldo/b1-pick-multi-teacher)
-
-Low-level model weights: https://drive.google.com/file/d/1KIfKu77QkrwbK-YllSWclqb6vJknGgjv/view?usp=sharing
-
+# 💻 Installation
 ## Set up the environment
 ```bash
-conda create -n b1z1 python=3.8 # isaacgym requires python <=3.8
+conda create -n dqwbc python=3.8 # isaacgym requires python <=3.8
 conda activate b1z1
 
-git clone git@github.com:Ericonaldo/visual_whole_body.git
+git@github.com:YoungYNG/DQ_WBC.git
 
-cd visual_whole_body
+cd DQ_WBC
 
 pip install torch torchvision torchaudio
 
@@ -38,49 +33,45 @@ cd skrl && pip install -e .
 cd ../..
 cd low-level && pip install -e .
 
-pip install numpy pydelatin tqdm imageio-ffmpeg opencv-python wandb
+pip install numpy pydelatin tqdm imageio-ffmpeg opencv-python wandb scipy
 ```
 
-## Structure
+# 🛠️ Usage
+### Low-level training
+This part you can totally refer to [VBC's Low-level introduction]([visual_wholebody/low-level at main · Ericonaldo/visual_wholebody](https://github.com/Ericonaldo/visual_wholebody/tree/main/low-level))
 
-- `high-level`: codes and environments related to the visuomotor high-level policy, task-relevant
+**Note**:We made changes to the **low-level** part of the VBC work mainly by **expanding the value ranges** of `delta_orn_r`, `delta_orn_p`, and `delta_orn_y` in `low-level/legged_gym/envs/manip_loco/b1z1_config.py`
 
-- `low-level`: codes and environments related to the general low-level controller for the quadruped and the arm, the only task is to learn to walk while tracking the target ee pose and the robot velocities.
+### High-level training and eval
+1. Train DQ_teacher:
+```bash
+   python train_multistate_DQ_teacher.py --rl_device cuda:0 --sim_device cuda:0 --timesteps 120000  --task B1Z1PickMulti --experiment_dir DQ_teacher/b1-pick-multi-teacher01 --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
+   ```
+2. Play DQ_teacher:
+   ```bash
+   python play_multistate_DQ_teacher.py --task B1Z1PickMulti --checkpoint your_teacher_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --rl_device cuda:0 --sim_device cuda:0   --headless
+   ```
+3. Train DQ_stu:
+   ```bash
+   python train_multi_bc_deter_DQ_stu.py --task B1Z1PickMulti --rl_device cuda:0 --sim_device cuda:0 --timesteps 240000 --experiment_dir DQ_opensource/b1-pick-multi-stu_transformer_grasp_have_vel_test01 --teacher_ckpt_path  your_teacher_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --headless
+   ```
+4. Play DQ_stu:
+   ```bash
+   python play_multi_bc_deter_DQ_stu.py --task B1Z1PickMulti --checkpoint your_stu_checkpoint_path --roboinfo --observe_gait_commands --small_value_set_zero --rand_control --rl_device cuda:0 --sim_device cuda:0   --headless
+   ```
 
-Detailed code structures can be found in these directories.
 
-## How to work (roughly)
+# 📝 Citation
 
-- Train a low-level policy using codes and follow the descriptions in `low-level`
+[](https://github.com/YanjieZe/3D-Diffusion-Policy/tree/master#-citation)
 
-- Put the low-level policy checkpoint into somewhere.
+If you find our work useful, please consider citing:
 
-- Train the high-level policy using codes and follow the descriptions in `high-level`, while assigning the low-level model in the config yaml file.
-
-## Acknowledgements (third-party dependencies)
-
-- [isaacgym](https://developer.nvidia.com/isaac-gym)
-- [legged_gym](https://github.com/leggedrobotics/legged_gym)
-- [rsl_rl](https://github.com/leggedrobotics/rsl_rl)
-- [skrl](https://github.com/Toni-SM/skrl)
-
-The low-level training also refers a lot to [DeepWBC](https://github.com/MarkFzp/Deep-Whole-Body-Control).
-
-## Codebase Contributions
-
-- [Minghuan Liu](https://minghuanliu.com) made efforts on improving the training efficiency, reward engineering, filling sim2real gaps, and reach expected behaviors, while cleaning and integrating the whole codebase for simplicity.
-- [Zixuan Chen](https://zixuan417.github.io) initialized the code base and made early progress on reward design, training, testing, and sim2real transferring, along with some baselines.
-- [Xuxin Cheng](https://chengxuxin.github.io/) shared a lot of domain knowledge and reward experience on locomotion and low-level policy training, and helped debug the code.
-- [Xuanbin Peng](https://github.com/xuanbinpeng) cleaned and refactored the low-level codebase to improve the readability while also finetuned the reward function for a stable walking.
-- [Yandong Ji](https://yandongji.github.io/) provided several suggestions and helped debug the code.
-
-## Citation
-If you find the code base helpful, consider to cite
 ```
-@article{liu2024visual,
-    title={Visual Whole-Body Control for Legged Loco-Manipulation},
-    author={Liu, Minghuan and Chen, Zixuan and Cheng, Xuxin and Ji, Yandong and Yang, Ruihan and Wang, Xiaolong},
-    journal={arXiv preprint arXiv:2403.16967},
-    year={2024}
+@article{Qiwei Liang,
+    title={Whole-Body Coordination for Dynamic Object Grasping with Legged Manipulators},
+    author={Liang, Qiwei and Cai, Boyang and He, Rongyi and Li, Hui and Teng, Tao and Duan, Haihan and Huang, Changxin and Zeng, Runhao},
+    journal={arXiv preprint arXiv:2508.08328},
+    year={2025}
 }
 ```
