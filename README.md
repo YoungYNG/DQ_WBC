@@ -8,7 +8,8 @@
 <p align="center">
 <img src="./dqnet_architecture.png" width="80%"/>
 </p>
-**Clarification**: Our project is highly based on work--VBC([Visual Whole-Body for Loco-Manipulation]([Ericonaldo/visual_wholebody: Train a loco-manipulation dog with RL](https://github.com/Ericonaldo/visual_wholebody)))
+
+**Clarification**: Our project is highly based on work--[VBC](https://github.com/Ericonaldo/visual_wholebody)
 
 # 💻 Installation
 ## Set up the environment
@@ -68,10 +69,10 @@ This part you can totally refer to [VBC's Low-level introduction]([visual_wholeb
 If you find our work useful, please consider citing:
 
 ```
-@article{Qiwei Liang,
-    title={Whole-Body Coordination for Dynamic Object Grasping with Legged Manipulators},
-    author={Liang, Qiwei and Cai, Boyang and He, Rongyi and Li, Hui and Teng, Tao and Duan, Haihan and Huang, Changxin and Zeng, Runhao},
-    journal={arXiv preprint arXiv:2508.08328},
-    year={2025}
+@article{liang2025whole,
+  title={Whole-Body Coordination for Dynamic Object Grasping with Legged Manipulators},
+  author={Liang, Qiwei and Cai, Boyang and He, Rongyi and Li, Hui and Teng, Tao and Duan, Haihan and Huang, Changxin and Zeng, Runhao},
+  journal={arXiv preprint arXiv:2508.08328},
+  year={2025}
 }
 ```
