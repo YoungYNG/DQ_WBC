@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<robot name="conveyor_belt">
+  <!-- Link for the conveyor belt base -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.5 0.05"/> <!-- Length = 0.6m, Width = 0.5m, Height = 0.05m (thickness of the belt) -->
+      </geometry>
+      <material name="gray"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.6 0.5 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="1.0"/>
+      <inertia ixx="0.01" ixy="0" ixz="0" iyy="0.01" iyz="0" izz="0.01"/>
+    </inertial>
+  </link>
+
+  <!-- Link for the conveyor belt moving surface -->
+  <link name="belt_surface">
+    <visual>
+      <geometry>
+        <box size="0.6 0.5 0.05"/> <!-- Same dimensions as the base, no height change -->
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.6 0.5 0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+  <!-- Joint to connect the surface to the base -->
+  <joint name="belt_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="belt_surface"/>
+    <origin xyz="0 0 0.025" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/> <!-- Rotating along the Y axis to simulate motion -->
+    <limit effort="100" velocity="1"/>
+  </joint>
+
+</robot>

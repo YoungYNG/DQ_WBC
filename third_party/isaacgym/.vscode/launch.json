@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Test Box (Isaac Gym)",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/python/examples/test_box.py",  // Path to your Python script
+        "pythonPath": "/home/young/anaconda3/envs/rlgpu/bin/python", // Path to the Python interpreter in your conda environment
+        "env": {
+          "PYTHONPATH": "/home/young/IsaacGym_Preview_4_Package/isaacgym/python"
+        },
+        "console": "integratedTerminal",
+        "envFile": "${workspaceFolder}/.env" // Optional: specify an environment file if needed
+      }
+    ]
+  }
+  

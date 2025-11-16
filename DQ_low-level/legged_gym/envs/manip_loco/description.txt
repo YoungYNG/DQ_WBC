@@ -1,0 +1,4 @@
+Compare to the original version of VBC,our modification of training low-level model can be concluded as follows:
+
+Resuming from the original 37000.pt which given by the author of VBC(our baseline method),we extend the scale of the end-effector's roll,pitch,yaw ;
+and we change base_height:-5.0 --> -4.0 && tracking_ee_world: 0.8-->1.5
