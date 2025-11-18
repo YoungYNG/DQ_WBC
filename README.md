@@ -6,7 +6,11 @@
 **Association for the Advancement of Artificial Intelligence(AAAI)  2026**
 
 <p align="center">
-<img src="./dqnet_architecture.png" width="80%"/>
+<img src="./dqnet_architecture.png" width="100%"/>
+</p>
+
+<p align="center">
+<img src="./dq_bench.png" width="100%"/>
 </p>
 
 **Clarification**: Our project is highly based on work--[VBC](https://github.com/Ericonaldo/visual_wholebody)
