@@ -5,14 +5,14 @@
 
 **Association for the Advancement of Artificial Intelligence(AAAI)  2026**
 
-**We design the first benchmark for evaling the whole-body coordination of dynamic object grasping with legged manipulators.**
+ - **We design the first benchmark for evaling the whole-body coordination of dynamic object grasping with legged manipulators.**
 
 <p align="center">
 <img src="./dq_bench.png" width="100%"/>
 </p>
 
 
-**Meanwhile, to improve the performance of grasping dynamic objects, we designed DQ-Net.**
+ - **Meanwhile, to improve the performance of grasping dynamic objects, we designed DQ-Net.**
 
 <p align="center">
 <img src="./dqnet_architecture.png" width="100%"/>
